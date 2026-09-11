@@ -1,28 +1,64 @@
+using System;
+using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _speed = 1.0f;
-    [SerializeField] private Transform _playerTransform;
-    [SerializeField] private GameObject _plantPrefab;
-    [SerializeField] private int _numSeeds = 5; 
-    [SerializeField] private PlantCountUI _plantCountUI;
+    [ShowInInspector, ReadOnly] Vector2 moveDir;
+    [ShowInInspector, ReadOnly] bool isMoving = false;
+    [ShowInInspector, ReadOnly] int currentSeeds;
+    [ShowInInspector, ReadOnly] int plantedSeeds = 0;
+    [Required] public GameObject seedPrefab;
+    [Required] public TextMeshProUGUI txt_remainingSeedsNum;
+    [Required] public TextMeshProUGUI txt_plantedSeedsNum;
+    public int maxSeeds = 5;
+    public float speed = 0.012f;
 
-    private int _numSeedsLeft;
-    private int _numSeedsPlanted;
 
-    private void Start ()
+    void OnEnable()
     {
-        
+        currentSeeds = maxSeeds;
+        UpdateUI();
     }
 
-    private void Update()
+    void FixedUpdate()
     {
-        
+        if(!isMoving) return;
+        transform.Translate(moveDir * speed);
     }
 
-    public void PlantSeed ()
+    void Update()
     {
-        
+        PollMove();
+        PollSpawnSeed();
+    }
+    
+    
+    void PollSpawnSeed()
+    {
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
+        if (currentSeeds <= 0) return;
+        currentSeeds--;
+        plantedSeeds++;
+        Instantiate(seedPrefab, transform.position, Quaternion.identity);
+        UpdateUI();
+    }
+
+    void PollMove()
+    {
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            isMoving = true;
+            moveDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        }
+        else 
+            isMoving = false;
+    }
+
+    void UpdateUI()
+    {
+        txt_remainingSeedsNum.text = currentSeeds.ToString();
+        txt_plantedSeedsNum.text = plantedSeeds.ToString();
     }
 }
