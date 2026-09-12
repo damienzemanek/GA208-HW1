@@ -3,12 +3,15 @@
 ### Devlog
 <hr>
 
+PROMPT: Write about how the plan you drew for the MG2 break-down activity connects to the code you wrote. 
+Cite specific class names and method names in the code and GameObjects in your Unity Scene.
+
 [Itch Build 0.0.1](https://starnightstudios.itch.io/ga208-mg1-assignment-game)
 
-Asset Procurement:
-- I looked online for an image of a bunny and a sapling, collected, and imported them
-- I made a new folder called W1 in the main directory, and inside that a folder called `Assets` and in a folder in that called `Sprites`
-- I set them to `Single` for their sprite mode, and their compression to `High Quality` then Applied.
+Asset Procurement: In order to meet my breakdown's requirements for its sprites I needed sprite assets. So:
+  - I looked online for an image of a bunny and a sapling, collected, and imported them
+  - I made a new folder called W1 in the main directory, and inside that a folder called `Assets` and in a folder in that called `Sprites`
+  - I set them to `Single` for their sprite mode, and their compression to `High Quality` then Applied.
 
 Scene Setup:
 - I added 2 Square 2D GameObjects and changed their Sprite Renderer Sprite asset to the respective assets, and named them accordingly
